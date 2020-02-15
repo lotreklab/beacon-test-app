@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { EstimoteBeacons, EstimoteBeaconRegion } from '@ionic-native/estimote-beacons/ngx';
+import { RestBeaconsService } from '../services/restbeacons.service';
+import { Point } from '../models/Point';
 
 @Component({
   selector: 'app-tab1',
@@ -8,60 +10,46 @@ import { EstimoteBeacons, EstimoteBeaconRegion } from '@ionic-native/estimote-be
 })
 export class Tab1Page {
 
-    // regionV: EstimoteBeaconRegion = {
-    //     major: 23137, //25536
-    //     minor: 52358,
-    //     uuid: 'B9407F30-F5F8-466E-AFF9-25556B57FE6D'
-    // };
-
-    // regionG: EstimoteBeaconRegion = {
-    //     major: 25536, //25536
-    //     minor: 33899,
-    //     uuid: 'B9407F30-F5F8-466E-AFF9-25556B57FE6D'
-    // };
-
     regionA: EstimoteBeaconRegion = {};
     distanceTr = 0.00025;
+    point: Point;
 
-  constructor(private eb: EstimoteBeacons) {}
+  constructor(
+      private eb: EstimoteBeacons,
+      public beaconRest:RestBeaconsService
+  ) {}
 
   ngOnDestroy() {
     this.eb.stopRangingBeaconsInRegion(this.regionA)
   }
+
 
   checkDistances(beacons) {
     for (let i = 0 ; i < beacons.length ; i++) {
         if (beacons[i].distance < this.distanceTr) {
             console.log('FOUND');
             console.log(beacons[i].macAddress)
+            this.beaconRest.GetPoint(beacons[i].macAddress).subscribe((point: Point)=>{
+                this.point = point;
+            })
+            break;
         }
     }
   }
 
   ngAfterViewInit() {
-      //https://ionicframework.com/docs/v3/native/estimote-beacons/
-    console.log('ENTER 2');
-    this.eb.requestAlwaysAuthorization();
-    this.eb.enableAnalytics(true);
+    //https://ionicframework.com/docs/v3/native/estimote-beacons/
+    // this.eb.requestAlwaysAuthorization();
+    // this.eb.enableAnalytics(true);
 
-
-    this.eb.startRangingBeaconsInRegion(this.regionA).subscribe(info => {
-        console.log(info);
-        this.checkDistances(info.beacons);
-    });
-
-
-
-
-    // this.eb.connectToBeacon({
-    //     proximityUUID: 'B9407F30-F5F8-466E-AFF9-25556B57FE6D'
-    // }).then(info => {
+    // this.eb.startRangingBeaconsInRegion(this.regionA).subscribe(info => {
     //     console.log(info);
+    //     this.checkDistances(info.beacons);
     // });
 
-    // this.eb.startEstimoteBeaconDiscovery().subscribe(beacons => {
-    //     console.log(JSON.stringify(beacons));
-    //   });
+    this.beaconRest.GetPoint('45:34:34:56:34').subscribe((point: Point)=>{
+        this.point = point;
+    })
 
   }
 
