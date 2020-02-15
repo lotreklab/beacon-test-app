@@ -25,7 +25,7 @@ SECRET_KEY = '53ifh(!$il(lu_6qmnjo_%s9*7cl-47ho-c56*_8uv-0dg_-p)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
