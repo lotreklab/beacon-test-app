@@ -15,6 +15,6 @@ class PointAdmin(admin.ModelAdmin):
         html = '<div style="border: 1px solid; height: 15px; width: 50px; background-color: {0};"><div>'
         return format_html(html.format(obj.color))
 
-    _color.short_description = 'Colore Beacon'
+    _color.short_description     = 'Colore Beacon'
 
 admin.site.register(Point, PointAdmin)
