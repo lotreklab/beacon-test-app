@@ -6,7 +6,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="point == null">
     <ion-card class="welcome-card">
       <img src="{{point?.image}}" alt="" />
       <ion-card-header>
@@ -19,6 +19,21 @@
     <ion-list lines="none">
       <ion-list-header>
         <ion-label><div [innerHTML]="point?.text"></div></ion-label>
+      </ion-list-header>
+    </ion-list>
+</ion-content>
+<ion-content *ngIf="point != null">
+    <ion-card class="welcome-card">
+      <ion-card-header>
+        <ion-card-subtitle></ion-card-subtitle>
+        <ion-card-title>Benvenuto nella app San Giorgio</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+      </ion-card-content>
+    </ion-card>
+    <ion-list lines="none">
+      <ion-list-header>
+        <ion-label>Continua a camminare all'interno della biblioteca per scoprire nuove stanze con tutte le novità in tempo reale!</ion-label>
       </ion-list-header>
     </ion-list>
 </ion-content>

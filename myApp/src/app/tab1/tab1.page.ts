@@ -11,8 +11,8 @@ import { Point } from '../models/Point';
 export class Tab1Page {
 
     regionA: EstimoteBeaconRegion = {};
-    distanceTr = 0.00025;
-    point: Point;
+    distanceTr:number = 0.00025;
+    point: Point = null;
 
   constructor(
       private eb: EstimoteBeacons,
@@ -25,15 +25,23 @@ export class Tab1Page {
 
 
   checkDistances(beacons) {
+    let nearestBeacon = null;
+    if (beacons.length > 0) {
+        nearestBeacon = beacons[0];
+    } else {
+        this.point = null;
+    }
     for (let i = 0 ; i < beacons.length ; i++) {
-        if (beacons[i].distance < this.distanceTr) {
-            console.log('FOUND');
-            console.log(beacons[i].macAddress)
-            this.beaconRest.GetPoint(beacons[i].macAddress).subscribe((point: Point)=>{
-                this.point = point;
-            })
-            break;
+        if (beacons[i].distance < nearestBeacon) {
+            nearestBeacon = beacons[i];
         }
+    }
+    if (nearestBeacon && nearestBeacon.distance < this.distanceTr) {
+        console.log('FOUND');
+        console.log(nearestBeacon.macAddress)
+        this.beaconRest.GetPoint(nearestBeacon.macAddress).subscribe((point: Point)=>{
+            this.point = point;
+        })
     }
   }
 
