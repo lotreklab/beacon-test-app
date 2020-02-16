@@ -10,4 +10,4 @@ class PointViewSet(viewsets.ModelViewSet):
     """
     serializer_class = PointSerializer
     queryset = Point.objects.all()
-    lookup_field = 'beacon_address'
+    lookup_field = 'beacon_address__iexact'
