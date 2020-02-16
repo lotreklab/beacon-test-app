@@ -12,3 +12,7 @@ class Point(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = 'Punto di interesse'
+        verbose_name_plural = 'Punti di interesse'
