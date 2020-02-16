@@ -2,6 +2,12 @@ from django.contrib import admin
 from django.utils.html import format_html
 from .models import Point
 
+
+admin.site.site_header = "Biblioteca San Giorgio CMS"
+admin.site.site_title = "Biblioteca San Giorgio CMS"
+admin.site.index_title = "Benvenuto nel portale Biblioteca San Giorgio"
+
+
 class PointAdmin(admin.ModelAdmin):
     list_display = ['name', 'beacon_address', '_color']
 
